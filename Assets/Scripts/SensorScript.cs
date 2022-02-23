@@ -47,6 +47,7 @@ public class SensorScript : MonoBehaviour
         if (distances[0] < 5 && distances[0] > 1)
         {
             sensorUP.enabled = true;
+            sensorUP.color = Color.red;
             Debug.Log("Czujnik UP uruchomiony! Dystans do obiektu: " + distances[0]);
         }
         else if (distances[1] < 5 && distances[1] > 1)
