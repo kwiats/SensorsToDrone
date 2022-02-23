@@ -19,11 +19,6 @@ public class SensorScript : MonoBehaviour
 
     void Start()
     {
-        sensorUP = GetComponent<RawImage>();
-        sensorDOWN = GetComponent<RawImage>();
-        sensorLEFT = GetComponent<RawImage>();
-        sensorRIGHT = GetComponent<RawImage>();
-
         sensorUP.enabled = false;
         sensorDOWN.enabled = false;
         sensorLEFT.enabled = false;
@@ -43,33 +38,65 @@ public class SensorScript : MonoBehaviour
 
             if(Physics.Raycast(ray, out hitData, distanceOfObject))
             {
-                //Debug.Log(hitData.distance + " = Uderzyl!");
+                Debug.Log(hitData.distance + " = Uderzyl!");
                 distances[i] = hitData.distance;
+                Debug.Log(distances[i]);
             }
  
         }
-        if (distances[0] > 1)
-        {
-            Debug.Log("1");
-            sensorUP.color = Color.red;
-        }
-        if (distances[1] > 1)
-        {
-            Debug.Log("2");
-        }
-        if (distances[2] > 1)
-        {
-            Debug.Log("3");
-        }
-        if (distances[3] > 1)
-        {
-            Debug.Log("4");
-        }
-        if (distances[4] > 1)
-        {
-            Debug.Log("5");
-        }
 
+        if (distances[0] > 5)
+        {
+            sensorUP.enabled = true;
+            Debug.Log("Czujnik UP uruchomiony! Dystans do obiektu: " + distances[0]);
+        }
+        else if (distances[1] > 5)
+        {
+            sensorRIGHT.enabled = true;
+            Debug.Log("Czujnik RIGHT uruchomiony! Dystans do obiektu: " + distances[1]);
+        }
+        else if (distances[2] > 5 || distances[3] > 5)
+        {
+            sensorDOWN.enabled = true;
+            Debug.Log("Czujnik DOWN uruchomiony! Dystans do obiektu: " + distances[2] );
+
+        }
+        else if (distances[4] > 5)
+        {
+            sensorLEFT.enabled = true;
+            Debug.Log("Czujnik LEFT uruchomiony! Dystans do obiektu: " + distances[4]);
+        }
+        else if (distances[0] > 5 && distances[1] > 5)
+        {
+            sensorUP.enabled = true;
+            sensorRIGHT.enabled = true;
+            Debug.Log("Czujnik UP and RIGHT  uruchomiony! Dystans do obiektu: " + distances[0]);
+        }
+        else if (distances[0] > 5 && distances[4] > 5)
+        {
+            sensorUP.enabled = true;
+            sensorLEFT.enabled = true;
+            Debug.Log("Czujnik UP and LEFT  uruchomiony! Dystans do obiektu: " + distances[0]);
+        }
+        else if (distances[1] > 5 && distances[2] > 5)
+        {
+            sensorRIGHT.enabled = true;
+            sensorDOWN.enabled = true;
+            Debug.Log("Czujnik DOWN and RIGHT  uruchomiony! Dystans do obiektu: " + distances[1]);
+        }
+        else if (distances[3] > 5 && distances[4] > 5)
+        {
+            sensorDOWN.enabled = true;
+            sensorLEFT.enabled = true;
+            Debug.Log("Czujnik DOWN and LEFT  uruchomiony! Dystans do obiektu: " + distances[3]);
+        }
+        else
+        {
+            sensorUP.enabled = false;
+            sensorDOWN.enabled = false;
+            sensorLEFT.enabled = false;
+            sensorRIGHT.enabled = false;
+        }
     }
 
     void OnDrawGizmos()
